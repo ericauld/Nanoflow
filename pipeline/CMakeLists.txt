@@ -201,6 +201,18 @@ target_link_libraries(shared_lib PRIVATE gemm_lib)
 
 # ------------- Build CUDA side -----------------#
 
+# EA: OK, here is the Cuda build stuff. They're making an executable called
+# `test_compute` (weird name, to my ear). They're linking it with:
+# - decode_kernels
+# - prefill_kernels
+# - ${MSCLPP_LIBRARY} (EA: That's an inter-GPU communication lib from Microsoft,
+#   I wonder why they chose to use that.)
+# - MPI
+# - spdlog::spdlog (EA: That's a logging library)
+# - gemm_lib (EA: They have cutlass stuff as include dirs on this, and it is
+#   initialized (on line 181) from all the `.cu` files living in that src /
+#   generate-gemm directory I was looking at before. Hmmm)
+
 add_executable(test_compute ${C_ALL})
 # Include Cutlass Libraries
 target_include_directories(test_compute PRIVATE ${CMAKE_SOURCE_DIR}/include)

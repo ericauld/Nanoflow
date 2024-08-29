@@ -15,7 +15,11 @@
 extern std::vector<vortexOutputData> outputs;
 extern std::vector<int> aggregated_output;
 
+// EA: Worker class...NB you might have expected there to be a corresponding
+// "memoryBound.cuh" in the current dir, but there isn't.
 
+// EA: This class seems like a key locus of control for the intra-device
+// parallelism they're talking about
 class Worker {
 public:
 	enum class PipelineType

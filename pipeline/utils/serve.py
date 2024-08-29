@@ -69,6 +69,9 @@ class WorkingSet:
         for req in self._set:
             req.kv_cache.allocate_tokens(len(req.input))
 
+# EA: Scheduler class. A priori you might have expected this to live in
+# scheduler.py, not the current file, serve.py
+
 class Scheduler:
     def __init__(self, memory_pool: DistKVPool, request_queue: NewRequestQueue, weight: list[pllm_python.VortexModelWeight], decode_length, prefill_length):
         self._memory_pool = memory_pool
@@ -135,7 +138,9 @@ class Scheduler:
         # find available pages
         available_pages = total_pages*0.9 - max_page_usage
         return available_pages
-        
+    
+    # EA: "workset"
+
     def schedule_req(self):
         with record_function("check_new_request"):
             # logging.info(f"Decode workset size: {self._decode_workset.size}")
@@ -173,6 +178,7 @@ class Scheduler:
                             output_len=new_req.output_len,
                             input_len=new_request_prompt_len
                         ))
+                        # EA: "Chunked", presumably in the sense of Sarathi (2023)
                         logging.info(f"Chunked prefill request: {new_req.req_idx}")
                         
                         # Computed in next iteration

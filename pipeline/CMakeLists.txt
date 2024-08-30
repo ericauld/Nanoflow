@@ -206,7 +206,7 @@ target_link_libraries(shared_lib PRIVATE gemm_lib)
 # - decode_kernels
 # - prefill_kernels
 # - ${MSCLPP_LIBRARY} (EA: That's an inter-GPU communication lib from Microsoft,
-#   I wonder why they chose to use that.)
+#   Pragaash referred to it as "mccl", on its repo they call it "MSCCL++")
 # - MPI
 # - spdlog::spdlog (EA: That's a logging library)
 # - gemm_lib (EA: They have cutlass stuff as include dirs on this, and it is
